@@ -4,7 +4,7 @@ session_start();
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "dbname";
+$database = "hngtask1db";
 
 $con = new mysqli($hostname, $username, $password, $database);
 
@@ -62,7 +62,7 @@ if (isset($_POST['signup'])) {
     else{
         $password = md5($password1);
         $display_name = substr($fullname, 0, 7);
-        $sql = "INSERT INTO users (username, display_name, email, userpass, reg_date) VALUE ('$fullname', '$display_name', '$email', '$password', NOW())";
+        $sql = "INSERT INTO users (fullname, display_name, email, userpass, reg_date) VALUE ('$fullname', '$display_name', '$email', '$password', NOW())";
         if ($con->query($sql) === TRUE){
             $signup_report = 'Your Sign up was Successful. Please <a href="login.php">login</a>';
         }
