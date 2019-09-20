@@ -14,6 +14,9 @@ if ($con->connect_errno) {
 } 
 error_reporting(1);
 
+$errors = array();
+$_SESSION['success'] = "";
+
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -30,11 +33,11 @@ function display_errors($errors){
 //USER SIGN UP
 $password1 = $password2 = $signup_report = $last_name = $last_email = "";
 
-if (isset($_POST['signup'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
 
     $fullname = $con->real_escape_string(test_input($_POST['name'])); 
-    if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
-        array_push($errors, "Sorry!! Name can only contain letters and white space");
+    if (!preg_match("/^[a-z]{3,} [a-z]{3,}$/i", $fullname)) {
+        array_push($errors, "Sorry!! Name should be formated as described");
     }
 
     $email = $con->real_escape_string(test_input($_POST['email']));
@@ -61,23 +64,26 @@ if (isset($_POST['signup'])) {
     }
     else{
         $password = md5($password1);
-        $display_name = substr($fullname, 0, 7);
+        // $signup_report = $password;
+        $names = explode(" ", $fullname);
+        $display_name = $names[0];
         $sql = "INSERT INTO users (fullname, display_name, email, userpass, reg_date) VALUE ('$fullname', '$display_name', '$email', '$password', NOW())";
         if ($con->query($sql) === TRUE){
-            $signup_report = 'Your Sign up was Successful. Please <a href="login.php">login</a>';
+            $signup_report = 'Your Sign up was Successful. Please <a href="index.php">login</a>';
         }
     }
 }
 
 // USER LOGIN
-$password = $report = '';
+$password = $last_email = $login_rep = '';
 
-if (isset($_POST['login'])){
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
 
     $email = $con->real_escape_string(test_input($_POST['email']));
     $password1 = $con->real_escape_string(test_input($_POST['password']));
 
     $password = md5($password1);
+    // $login_rep = $password;
     $sql = "SELECT * FROM `users` WHERE `email` = '$email' AND `userpass` = '$password'";
     $query = $con->query($sql);
     $result = mysqli_num_rows($query);
@@ -85,23 +91,27 @@ if (isset($_POST['login'])){
 
     if ($result == 1){
         $_SESSION['user_id'] = $row['id'];
+        $_SESSION['name'] = $row['display_name'];
+        $_SESSION['email'] = $row['email'];
         header("location: dashboard.php");
     }
     else{
-        $rep = 'Wrong username/password combination';
+        $login_rep = 'Wrong username/password combination';
+        $last_email = $email;
     }
 }
 
 function userAuth(){
     if (!isset($_SESSION['user_id'])){
-        header("location: ../login.php");
+        header("location: index.php");
     }
     
 }
 
 function logOut() {
     if (isset($_POST['logout'])) {
-        header("location: ../login.php");
+        session_destroy();
+        header("location: index.php");
     }
 }
 

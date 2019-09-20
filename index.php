@@ -1,3 +1,4 @@
+<?php include('phpcore/userconnect.php') ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,18 +17,18 @@
             <div class="col1">
                 <fieldset>
                     <img src="assets/images/eagle-logo.png" alt="eagle">
-                    <form>                                                                
-                        <input type="text" name="name" placeholder="Full Name" required>                              
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                        <div id="report"><?= $login_rep ?></div>
+                        <input type="email"  name="email" placeholder="Enter your email" value="<?= $last_email ?>" required>                               
 
-                        <input type="email"  name="email" placeholder="Email Address" required>                               
-
-                        <input type="Pword" name="password" placeholder="Password" required>                
-                                
-                        <input type="psw" name="password_repeat" placeholder="Confirm Password" required>                
+                        <input type="password" name="password" placeholder="Enter your password" required>                
                                                                             
-                        <button type="submit" name="submit" value="signup">Register</button>
+                        <button type="submit" name="login">Login</button>
 
-                        <p> Already have an account? <a href="index.html">Login</a> </p> 
+                        <div class="flex2">
+                            <p> <a href="register.php">Register</a> </p>
+                            <p> <a href="#">Forgot Password</a> </p>
+                        </div> 
                     </form> 
                 </fieldset> 
             </div>

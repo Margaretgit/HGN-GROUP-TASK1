@@ -1,3 +1,16 @@
+<?php 
+include('phpcore/userconnect.php');
+
+userAuth();
+
+logOut();
+
+$dName = $_SESSION['name'];
+$dEmail = $_SESSION['email'];
+$dPic = strtoupper(substr($dName, 0, 1));
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +29,11 @@
     </nav>
     <div class="containr">
         <div class="leftcol">
-            <div class="prof-pic"><p>A</p></div>
-            <p>email address</p>
+            <div class="prof-pic"><p><?= $dPic ?></p></div>
+            <p><?= $dEmail ?></p>
         </div>
         <div class="rightcol">
-            <p>Welcome <span>Fisrtname</span>, What would you like to do today.</p>
+            <p>Welcome <span><?= $dName ?></span>, What would you like to do today.</p>
         </div>
     </div>
 </body>

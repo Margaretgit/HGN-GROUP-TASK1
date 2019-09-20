@@ -118,5 +118,10 @@ form p a:hover {
     width: 80%;
     margin: auto;
     align-content: center;
-    
+}
+
+#report {
+    background-color: rgba(82, 184, 224, 0.562);
+    width: 80%;
+    margin: auto;
 }
