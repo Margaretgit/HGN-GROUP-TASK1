@@ -15,22 +15,19 @@
             
         <div class="flex">
             <div class="col1">
-                <fieldset>
-                    <img src="assets/images/eagle-logo.png" alt="eagle">
-                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                    <fieldset>
+                        <img src="assets/images/eagle-logo.png" alt="eagle">
                         <div id="report"><?= $login_rep ?></div>
                         <input type="email"  name="email" placeholder="Enter your email" value="<?= $last_email ?>" required>                               
-
-                        <input type="password" name="password" placeholder="Enter your password" required>                
-                                                                            
+                        <input type="password" name="password" placeholder="Enter your password" required>                                                                    
                         <button type="submit" name="login">Login</button>
-
                         <div class="flex2">
                             <p> <a href="register.php">Register</a> </p>
                             <p> <a href="#">Forgot Password</a> </p>
                         </div> 
-                    </form> 
-                </fieldset> 
+                    </fieldset> 
+                </form>
             </div>
             <div class="col2">
                 <div class="welcome">
